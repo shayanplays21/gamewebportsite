@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BoogerRangerwebports</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
+}
+
+body{
+    background:#121212;
+    color:white;
+    min-height:100vh;
+}
+
+header{
+    padding:20px;
+    text-align:center;
+    background:#1e1e1e;
+    box-shadow:0 2px 10px rgba(0,0,0,.3);
+}
+
+h1{
+    margin-bottom:15px;
+}
+
+#search{
+    width:90%;
+    max-width:500px;
+    padding:12px;
+    border:none;
+    border-radius:8px;
+    font-size:16px;
+}
+
+.games-container{
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(200px,1fr));
+    gap:20px;
+    padding:30px;
+}
+
+.game-card{
+    background:#1e1e1e;
+    border-radius:12px;
+    overflow:hidden;
+    cursor:pointer;
+    transition:.2s;
+    text-align:center;
+}
+
+.game-card:hover{
+    transform:translateY(-5px);
+    box-shadow:0 0 15px rgba(255,255,255,.15);
+}
+
+.game-card img{
+    width:100%;
+    height:150px;
+    object-fit:cover;
+}
+
+.game-name{
+    padding:15px;
+    font-size:18px;
+    font-weight:bold;
+}
+</style>
+</head>
+<body>
+
+<header>
+    <h1>BoogerRangers fun game web ports </h1>
+    <input type="text" id="search" placeholder="Search games...">
+</header>
+
+<div class="games-container" id="gamesContainer"></div>
+
+<script>
+const games = [
+    {
+        name: "Grand Theft Auto V",
+        icon: "icons/gta5.webp",
+        file: "https://gta5web.uk"
+    }
+];
+
+const container = document.getElementById("gamesContainer");
+
+function displayGames(list){
+    container.innerHTML = "";
+
+    list.forEach(game => {
+        const card = document.createElement("div");
+        card.className = "game-card";
+
+        card.innerHTML = `
+            <img src="${game.icon}" alt="${game.name}">
+            <div class="game-name">${game.name}</div>
+        `;
+
+        card.onclick = () => {
+            window.location.href = game.file;
+        };
+
+        container.appendChild(card);
+    });
+}
+
+displayGames(games);
+
+document.getElementById("search").addEventListener("input", e => {
+    const search = e.target.value.toLowerCase();
+
+    const filtered = games.filter(game =>
+        game.name.toLowerCase().includes(search)
+    );
+
+    displayGames(filtered);
+});
+</script>
+
+</body>
+</html>
